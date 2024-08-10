@@ -35,7 +35,8 @@ def evaluage_alpha(points, views, gaussians, pipeline, background, kernel_size, 
 
 @torch.no_grad()
 def marching_tetrahedra_with_binary_search(model_path, name, iteration, views, gaussians, pipeline, background, kernel_size, filter_mesh : bool, texture_mesh : bool):
-    render_path = os.path.join(model_path, name, "ours_{}".format(iteration), "fusion")
+    # render_path = os.path.join(model_path, name, "ours_{}".format(iteration), "fusion")
+    render_path = os.path.join(model_path, "mesh", "iteration_{}".format(iteration))
 
     makedirs(render_path, exist_ok=True)
     
@@ -117,7 +118,7 @@ def marching_tetrahedra_with_binary_search(model_path, name, iteration, views, g
             mesh.update_vertices(mask)
             mesh.update_faces(face_mask)
         
-        mesh.export(os.path.join(render_path, f"mesh_binary_search_{step}.ply"))
+        mesh.export(os.path.join(render_path, f"mesh.ply"))
 
     # linear interpolation
     # right_sdf *= -1
@@ -151,7 +152,10 @@ if __name__ == "__main__":
     parser.add_argument("--texture_mesh", action="store_true")
     args = get_combined_args(parser)
     print("Rendering " + args.model_path)
-    
+    if args.texture_mesh:
+        print("Extract texture mesh")
+    else:
+        print("Extract normal mesh")
     random.seed(0)
     np.random.seed(0)
     torch.manual_seed(0)

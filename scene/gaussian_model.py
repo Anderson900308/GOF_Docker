@@ -440,8 +440,12 @@ class GaussianModel:
                         np.asarray(plydata.elements[0]["y"]),
                         np.asarray(plydata.elements[0]["z"])),  axis=1)
         opacities = np.asarray(plydata.elements[0]["opacity"])[..., np.newaxis]
-
-        filter_3D = np.asarray(plydata.elements[0]["filter_3D"])[..., np.newaxis]
+        
+        try:
+            filter_3D = np.asarray(plydata.elements[0]["filter_3D"])[..., np.newaxis]
+        except:
+            print("No 3D filter found in the ply file, write as zeros")
+            filter_3D = np.zeros(opacities.shape)
 
         features_dc = np.zeros((xyz.shape[0], 3, 1))
         features_dc[:, 0, 0] = np.asarray(plydata.elements[0]["f_dc_0"])

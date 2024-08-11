@@ -31,6 +31,39 @@ homee_dataset2_result
 
 # Shell Script
 The source path, model path and other arguments are defined in the begining of pipelin.sh
+
+```
+#!/bin/bash
+
+SOURCE_PATH="./data/homee_dataset2"
+MODEL_PATH="./data/homee_dataset2/result"
+ITERATION="50000"
+SKIP_GOF=false
+TEXTURE_MESH=true
+SKIP_POSTPROCESS=true
+
+if [ "$SKIP_GOF" = "true" ]; then
+    echo "Skipping GOF"
+else
+    echo "Training GOF"
+    python train.py -s $SOURCE_PATH -m $MODEL_PATH --iteration $ITERATION
+fi
+
+if [ "$TEXTURE_MESH" = "true" ]; then
+    echo "Extract textured mesh"
+    python extract_mesh.py -s $SOURCE_PATH -m $MODEL_PATH --iteration $ITERATION --texture_mesh
+else
+    echo "Extract normal mesh"
+    python extract_mesh.py -s $SOURCE_PATH -m $MODEL_PATH --iteration $ITERATION 
+fi
+
+if [ "$SKIP_POSTPROCESS" = "true" ]; then
+    echo "Skipping postprocess"
+else
+    echo "Postprocess"
+    python mesh_postprocess.py -m $MODEL_PATH --iteration $ITERATION
+fi
+```
 <details>
 <summary><span style="font-weight: bold;">Shell Script Arguments for pipline.sh</span></summary>
 
@@ -54,7 +87,7 @@ The source path, model path and other arguments are defined in the begining of p
 # Build Docker
 Clone the repository and build the Docker environment, need to modified the mount path in docker run command.
 ```
-git clone 
+git clone https://github.com/Anderson900308/GOF_Docker.git
 cd gof_docker
 
 # Build Docker environment

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SOURCE_PATH="./data/homee_dataset2_3"
-MODEL_PATH="./data/homee_dataset2_3/result"
+SOURCE_PATH="./data/homee_dataset2"
+MODEL_PATH="./data/homee_dataset2/result"
 ITERATION="50000"
 SKIP_GOF=false
 TEXTURE_MESH=true

@@ -1,5 +1,5 @@
 # Docker for Gaussian Opacity Field
-
+The Repo is the docker enviroment setup for [Gaussian Opacity field](https://github.com/autonomousvision/gaussian-opacity-fields).
 # Dataset
 The dataset to train in the Gaussian Opacity Field follows the data format from 3DGS
 ```

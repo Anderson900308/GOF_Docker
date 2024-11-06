@@ -1,5 +1,5 @@
 import torch
-from scene import Scene
+from nerfstudio_utils import Scene
 import os
 from os import makedirs
 from gaussian_renderer import integrate
@@ -126,7 +126,7 @@ def extract_mesh(dataset : ModelParams, pipeline : PipelineParams, texture_mesh 
         for thres in thres_list:
             print("Extracting mesh with threshold {}".format(thres))
             marching_tetrahedra_with_binary_search(dataset.model_path, cams, gaussians, pipeline, background, kernel_size, texture_mesh, splat_file_name, thres) # type: ignore
-        # marching_tetrahedra_with_binary_search(dataset.model_path, cams, gaussians, pipeline, background, kernel_size, texture_mesh, splat_file_name) 
+            
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Testing script parameters")

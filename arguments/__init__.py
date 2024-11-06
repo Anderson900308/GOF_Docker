@@ -61,6 +61,8 @@ class ModelParams(ParamGroup):
         self.load_allres = False
         self.sample_more_highres = False
         self.use_decoupled_appearance = False
+        self.method = "colmap"
+        self.splat_file = ""
         super().__init__(parser, "Loading Parameters", sentinel)
 
     def extract(self, args):

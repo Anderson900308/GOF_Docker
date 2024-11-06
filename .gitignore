@@ -36,3 +36,4 @@ eval_tnt/TrainingSet
 dtu_eval/Offical_DTU_Dataset
 __pycache__
 nerfstudio_data/
+*.txt

@@ -38,8 +38,7 @@ RUN /bin/bash -c "cd submodules/tetra-triangulation && \
     pip install -e ."
 
 # CMD ["bash", "-c", "source ./pipeline.sh"]
-CMD ["conda", "run", "--no-capture-output", "-n", "gof", "/bin/bash", "-c", "source ./pipeline.sh"]
-
+# CMD ["conda", "run", "--no-capture-output", "-n", "gof", "/bin/bash", "-c", "source ./pipeline.sh"]
 # ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "gof", "/bin/bash", "-c", \
 #     "python train.py -s ./data/homee_dataset2/ -m ./data/homee_dataset2/result --iteration 100000&& \
 #     python extract_mesh.py -m ./data/homee_dataset2/result --iteration 100000 --texture_mesh"]

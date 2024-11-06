@@ -1,6 +1,75 @@
 # Docker for Gaussian Opacity Field
-The Repo is the docker enviroment setup for [Gaussian Opacity field](https://github.com/autonomousvision/gaussian-opacity-fields).
-# Dataset
+The Repo is the docker enviroment setup for [Gaussian Opacity field](https://github.com/autonomousvision/gaussian-opacity-fields), and modification for [Homee Nerfstudio](https://github.com/homee-ai/nerfstudio).
+
+# Build Docker
+Clone the repository and build the Docker environment, need to modified the mount path in docker run command.
+```
+git clone https://github.com/Anderson900308/GOF_Docker.git
+cd gof_docker
+
+# Build Docker environment
+docker build -t homee_docker .
+
+# Run the docker image 
+docker run -it --gpus all -v /path/to/dataset/:/gof/data --name homee homee_docker 
+
+# To open interatcive shell
+docker start homee
+docker exec -it homee bash
+
+```
+# Nerfstudio Dataset
+The dataset is trained in Homee Nerfstudio enviroment, and the format should be as followed
+```
+Dataset
+|---Dataset_nerfstudio
+    |---colmap
+    |   |---arkit/0
+    |   |---colmap/0
+    |---images
+        |---0001.png
+        |---0002.png
+        |---...
+```
+The optimized result shoud be convert to 3DGS.ply format
+```
+Result
+|---splat,ply
+```
+---
+# Mesh Extraction
+To run mesh extraction in Nerfstudio format
+```
+python extract_mesh_nerfstudio.py \
+    -s "Path to source folder" \
+    --method "Method used in Homee Nerfstudio" \
+    --splat_file "Splat file used to extract the mesh" \
+    --texture_mesh
+
+# Example 
+python extract_mesh_nerfstudio.py \
+    -s ./nerfstudio_data/homee_dataset3/homee_dataset3_nerfstudio/ \
+    --method arkit \
+    --splat_file ./nerfstudio_data/result/h3/splat_modified.ply \
+    --texture_mesh
+```
+# Mesh Postprocess
+To run mesh postprocess in Nerfstudio format
+```
+python mesh_postprocess_nerfstudio.py \
+    -s "Path to source folder" \
+    --method "Method used in Homee Nerfstudio" \
+    --splat_file "Splat file used for extract the mesh" \
+    --mesh "Target mesh file to do the postprocess"
+
+# Example 
+python mesh_postprocess_nerfstudio.py \
+    -s ./nerfstudio_data/homee_dataset3/homee_dataset3_nerfstudio/ \
+    --method arkit \
+    --splat_file ./nerfstudio_data/result/h3/splat_modified.ply \
+    --mesh ./nerfstudio_data/result/h3/splat_modified_mesh_thres_0.95.ply
+```
+# Normal Dataset
 The dataset to train in the Gaussian Opacity Field follows the data format from 3DGS
 ```
 homee_dataset2
@@ -30,7 +99,7 @@ homee_dataset2_result
 ```
 
 # Shell Script
-The source path, model path and other arguments are defined in the begining of pipelin.sh
+The source path, model path and other arguments are defined in the beginning of pipelin.sh
 
 ```
 #!/bin/bash
@@ -84,21 +153,5 @@ fi
 <br>
 
 
-# Build Docker
-Clone the repository and build the Docker environment, need to modified the mount path in docker run command.
-```
-git clone https://github.com/Anderson900308/GOF_Docker.git
-cd gof_docker
 
-# Build Docker environment
-docker build -t homee_docker .
-
-# Run the docker image 
-docker run -it --gpus all -v /path/to/dataset/:/gof/data --name homee homee_docker 
-
-# To open interatcive shell
-docker start homee
-docker exec -it homee bash
-
-```
 

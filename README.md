@@ -5,7 +5,7 @@ The Repo is the docker enviroment setup for [Gaussian Opacity field](https://git
 Clone the repository and build the Docker environment, need to modified the mount path in docker run command.
 ```
 git clone https://github.com/Anderson900308/GOF_Docker.git
-cd gof_docker
+cd GOF_docker
 
 # Build Docker environment
 docker build -t homee_docker .

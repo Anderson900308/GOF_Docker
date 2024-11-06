@@ -1,5 +1,5 @@
-import open3d as o3d
 import os
+import open3d as o3d
 from argparse import ArgumentParser
 
 if __name__ == '__main__':
